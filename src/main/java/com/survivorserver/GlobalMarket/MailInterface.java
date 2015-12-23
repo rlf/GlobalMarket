@@ -122,7 +122,12 @@ public class MailInterface extends IMenu {
         }
         if (isListing) {
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', market.getLocale().get("interface.mail_listing_title", meta.hasDisplayName() ? meta.getDisplayName() : market.getItemNameSingle(item))));
-            lore.add(ChatColor.GREEN + market.getLocale().get("interface.selling_for", market.getEcon().format(market.getStorage().getListing(-mailItem.getId()).getPrice())));
+            Listing listing = market.getStorage().getListing(-mailItem.getId());
+            if (listing != null) {
+                lore.add(ChatColor.GREEN + market.getLocale().get("interface.selling_for", market.getEcon().format(listing.getPrice())));
+            } else {
+                lore.add(ChatColor.RED + market.getLocale().get("interface.transaction_error"));
+            }
         }
         lore.add(instructions);
         meta.setLore(lore);
