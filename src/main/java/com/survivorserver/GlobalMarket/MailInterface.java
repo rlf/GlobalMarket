@@ -209,7 +209,9 @@ public class MailInterface extends IMenu {
     public IMarketItem getItem(InterfaceViewer viewer, int id) {
         if (id < 0) {
             Listing listing = market.getStorage().getListing(Math.abs(id));
-            return new Mail(viewer.getName(), -listing.getId(), listing.getItemId(), listing.getAmount(), 0, null, viewer.getWorld());
+            if (listing != null && viewer != null) {
+                return new Mail(viewer.getName(), -listing.getId(), listing.getItemId(), listing.getAmount(), 0, null, viewer.getWorld());
+            }
         }
         return market.getStorage().getMail(id);
     }
